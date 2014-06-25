@@ -21,5 +21,5 @@ fun t x = (addT (x*d) t , rTF(x^2))
 
 main= do t <- getCurrentTime
          l <- return $  map (fun t) [0, 0.1 .. 10 ] 
-         defaultMain ( circle 1 #fc red <>graph l  :: Diagram B R2)
+         defaultMain ( graph l  :: Diagram B R2)
 
