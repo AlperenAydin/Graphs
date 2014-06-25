@@ -89,11 +89,11 @@ graph t =  position (zip l (repeat dot))<>mconcat[lines,yaxis,co,xaxis,bckgrnd]
         -- The list of points which is the used
         --to create the lines and position the dots
         l = trendToPoints t 
-        lines = fromVertices l #lc blue
+        lines = fromVertices l #lc blue 
         dot = circle 0.2 # fc black
         --The axis:
         yaxis = draw [(0,0),(0,100)]
-        ymark n  = hline <> write n # push (2) (0) 
+        ymark n  = hline <>  write (mkPercent n) # push (-3) 0
         co = position( map (\n -> (p2(0,n),ymark n)) [0, 20.0 .. 100.0])
         --The x-axis: Only has some values:
         lnth=length l
@@ -103,12 +103,13 @@ graph t =  position (zip l (repeat dot))<>mconcat[lines,yaxis,co,xaxis,bckgrnd]
                in foldr f [] [0..lnth]
         xmarks = let f x xs = if x `mod` 10 ==0 then (t!!x):xs else xs
                      t' = foldr f [] [0..lnth]
-                     mark n = vline <> write (utcToDate n) # push 0 (-0.5)
+                     mark n = vline <> write (utcToDate n) # push 0 (-2)
                  in map (\ (time,i) -> mark time) t'
         xaxis = position (zip xpos xmarks)
 
         --The Background:
         bckgrnd= strutY 5 #push 0 (-5) <> strutX 5 # push (-5) 0
+                 <> strutY 5 # push 0 100 <> sturX 5 # push l 0
 
         
 
