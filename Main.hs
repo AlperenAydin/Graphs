@@ -11,15 +11,15 @@ import Diagrams.Prelude
 import Diagrams.Backend.Cairo.CmdLine
 
 
-
+  
 addT a = addUTCTime a
 
 rTF= realToFrac
 
 fun :: UTCTime -> NominalDiffTime -> (UTCTime, Double)
-fun t x = (addT (x*d) t , rTF(x^2))
+fun t x = (addT (x*d) t , rTF x)
 
 main= do t <- getCurrentTime
-         l <- return $  map (fun t) [0, 0.1 .. 10 ] 
-         defaultMain ( graph l  :: Diagram B R2)
+         l <- return $  map (fun t) [0, 1 .. 100 ] 
+         defaultMain ( graph l # pad 1.1 :: Diagram B R2)
 
