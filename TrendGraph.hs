@@ -30,7 +30,7 @@ diffTime = diffUTCTime
 push :: Double -> Double -> Di -> Di
 push x y = translate (r2(x,y))
 
-write = (scale 3).text.show
+write = text.show
 
 draw :: [(Double,Double)] -> Di
 draw l = fromVertices $ map p2 l
@@ -84,7 +84,7 @@ vline = draw [(0,0),(0,0.5)]
 
 
 graph :: [Trend] -> Di
-graph t =  position ( zip l (repeat dot)) <> lines <> yaxis <> co <> xaxis
+graph t =  position (zip l (repeat dot))<>mconcat[lines,yaxis,co,xaxis,bckgrnd]
   where
         -- The list of points which is the used
         --to create the lines and position the dots
@@ -106,6 +106,9 @@ graph t =  position ( zip l (repeat dot)) <> lines <> yaxis <> co <> xaxis
                      mark n = vline <> write (utcToDate n) # push 0 (-0.5)
                  in map (\ (time,i) -> mark time) t'
         xaxis = position (zip xpos xmarks)
+
+        --The Background:
+        bckgrnd= strutY 5 #push 0 (-5) <> strutX 5 # push (-5) 0
 
         
 
